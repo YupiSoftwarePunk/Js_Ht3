@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Стартовая страница</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+        <script src="js/main.js" defer></script>
+        <script src="js/navigation.js" defer></script>
+        <script src="js/text-formatter.js" defer></script>
+        <script src="js/tests.js" defer></script>
+        <script src="js/collections.js" defer></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>Сайт мистера Денискиса</h1>
+            <a href="/" class="logo-link">
+                <img src="img/cover.jpg" alt="Логотип сайта" class="logo-image" height="100" width="100">
+            </a>
+            <nav class="main-nav" >
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Главная</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link"> О нас</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <p>Добро пожаловать на наш сайт!</p>
+            <p>Здесь вы найдете много интересной информации.</p><br>
+
+            <form method="post">
+                <input type="text" placeholder="Пост 1">
+            </form>
+
+            <select id="sort-posts">
+                <option value="default">Без сортировки</option>
+                <option value="date">По дате (сначала новые)</option>
+                <option value="views">По просмотрам</option>
+            </select>
+
+            <div id="tag-cloud" style="margin: 10px 0; padding: 10px; border: 1px dashed #ccc;">
+                <strong>Подборки по тегам:</strong>
+                <div id="tags-container"></div>
+            </div>
+
+            <ul id="post-list">
+            </ul>
+            <p id="no-results" style="display: none; color: red;">По вашему запросу ничего не найдено</p>
+
+            <select id="filter-readability">
+                <option value="0">Любая сложность</option>
+                <option value="20">Легкие</option>
+                <option value="40">Средние</option>
+                <option value="60">Сложные</option>
+            </select>
+
+            <button id="export-csv">Экспорт в CSV</button>
+
+            <section id="blog-stats" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
+                <h3>Статистика блога</h3>
+                <div id="stats-content">Загрузка...</div>
+                <canvas id="publish-chart" width="400" height="100"></canvas> <button id="export-csv">Экспорт в CSV</button>
+            </section>
+
+            <div id="post-detail-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;"></div>
+
+            
+            <div id="post-detail-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:30px; z-index:1001; width:70%; max-height:90vh; overflow-y:auto; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <h2 id="detail-title">Название поста</h2>
+                
+                <div id="detail-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; background:#f4f4f4; padding:15px; border-radius:8px; margin-bottom:20px;">
+                    <div><strong>Дата:</strong> <span id="stat-date"></span></div>
+                    <div><strong>Просмотры:</strong> <span id="stat-views"></span></div>
+                    <div><strong>Символов:</strong> <span id="stat-chars"></span></div>
+                    <div><strong>Слов:</strong> <span id="stat-words"></span></div>
+                    <div><strong>Сложность:</strong> <span id="stat-readability"></span></div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <label><strong>Текст поста:</strong></label>
+                    <textarea id="detail-content-edit" style="width:100%; height:200px; padding:10px; font-family: Montserrat, sans-serif; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button id="detail-format-btn" style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Форматировать (JS/Текст/Код)</button>
+                        <button id="detail-save-btn" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Сохранить изменения</button>
+                        <button id="detail-close-btn" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Закрыть</button>
+                    </div>
+                </div>
+
+                <div id="detail-preview-container" style="display:none; margin-top: 25px; padding: 15px; border-left: 4px solid #3498db; background: #ebf5fb;">
+                    <strong>Превью после форматирования:</strong>
+                    <div id="detail-formatted-result" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+
+        </footer>
+    </body>
+</html>
