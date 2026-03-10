@@ -1,14 +1,11 @@
 class AdminUser extends User {
-    #permissions = [];
-    static MAX_PERMISSIONS;
-    id;
-    name;
+    #permissions = new Set();
+    static MAX_PERMISSIONS = 5;
 
 
     constructor(id, name)
     {
         super(id, name, 'admin');
-        this.#permissions = new Set();
     }
 
     grantPermission(permission)
@@ -18,13 +15,13 @@ class AdminUser extends User {
             return false;
         }
         
-        if (this.#permissions.length >= AdminUser.MAX_PERMISSIONS) {
+        if (this.#permissions.size >= AdminUser.MAX_PERMISSIONS) {
             console.error("Достигнут лимит прав!");
             return false;
         }
 
-        if (!this.#permissions.includes(permission)) {
-            this.#permissions.push(permission);
+        if (!this.#permissions.has(permission)) {
+            this.#permissions.add(permission);
             console.log(`[LOG]: Администратор ${this.name} выдал право: ${permission}`);
             return true;
         }
@@ -32,25 +29,29 @@ class AdminUser extends User {
 
     revokePermission(permission)
     {
-        this.#permissions = this.#permissions.filter(p => p !== permission);
-        console.log(`[LOG]: Администратор ${this.name} отозвал право: ${permission}`);
+        if (this.#permissions.delete(permission)) {
+            console.log(`[LOG]: Администратор ${this.name} отозвал право: ${permission}`);
+        }
     }
 
     hasRole(role)
     {
-        if (role === 'admin') 
+        if (role === 'admin') {
             return true;
-        // return this.#permissions.includes(role);
+        }
+        else {
+            return this.#permissions.has(role);
+        }
     }
 
     getPermissions()
     {
-        return [...this.#permissions];
+        return Array.from(this.#permissions);
     }
 
     canManageUsers()
     {
-        return this.#permissions.includes('manage_users');
+        return this.#permissions.has('manage_users');
     }
 
     banUser(userId, reason)

@@ -51,9 +51,13 @@ function CreatePosts(data)
     
     let spanReadTime = document.createElement('span');
     spanReadTime.classList.add('stats-read-time');
+
+    const wordCount = data.content.split(/\s+/).length;
+    spanReadTime.textContent = `Время чтения: ${Math.ceil(wordCount / 200)} мин.`;
     
     let spanDetails = document.createElement('span');
     spanDetails.classList.add('stats-details');
+    spanDetails.textContent = `Теги: ${data.tags}`;
 
     div.append(spanDate, " | ", spanReadTime, " | ", spanDetails);
 
@@ -123,21 +127,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 200);
 
-    const demoBtn = document.getElementById('demoBtn');
+    const demoBtn = document.createElement('button');
     if (demoBtn) {
         Object.assign(demoBtn.style, {
+            position: "relative",
+            zIndex: "2000",     
             background: "#ff4757",
             color: "white",
-            padding: "10px 20px",
+            padding: "15px 30px",
             border: "none",
-            borderRadius: "5px",
+            borderRadius: "8px",
             cursor: "pointer",
             display: "block",
-            margin: "20px 0"
+            margin: "40px auto", 
+            fontSize: "16px",
+            fontWeight: "bold"
         });
 
         demoBtn.onclick = demoInheritance;
+        console.log("Кнопка демо найдена и настроена"); 
+    } 
+    else {
+        console.error("Кнопка #demoBtn не найдена в DOM!");
     }
+
+    demoInheritance();
 });
 
 
