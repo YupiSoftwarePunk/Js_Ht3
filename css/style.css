@@ -276,3 +276,66 @@ mark { background: yellow; padding: 0 2px; }
     transform: scale(1.01);
     transition: all 0.2s ease;
 }
+
+#blog-stats {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    min-height: 250px; 
+}
+
+.chart-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 150px;
+    padding: 20px 10px 0 10px;
+    border-bottom: 2px solid #3498db;
+    margin-bottom: 20px;
+}
+
+.bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.bar {
+    width: 20px;
+    background: linear-gradient(to top, #3498db, #5dade2);
+    border-radius: 4px 4px 0 0;
+
+    height: var(--height, 0%); 
+
+    transform: scaleY(0); 
+    transform-origin: bottom; 
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bar-wrapper span {
+    font-size: 10px;
+    color: #7f8c8d;
+    margin-top: 8px;
+}
+
+#blog-stats.visible .bar {
+    transform: scaleY(1);
+}
+
+#blog-stats.visible .bar-wrapper:nth-child(1) .bar { transition-delay: 0.1s; }
+#blog-stats.visible .bar-wrapper:nth-child(2) .bar { transition-delay: 0.2s; }
+#blog-stats.visible .bar-wrapper:nth-child(3) .bar { transition-delay: 0.3s; }
+#blog-stats.visible .bar-wrapper:nth-child(4) .bar { transition-delay: 0.4s; }
+#blog-stats.visible .bar-wrapper:nth-child(5) .bar { transition-delay: 0.5s; }
+#blog-stats.visible .bar-wrapper:nth-child(6) .bar { transition-delay: 0.6s; }
+#blog-stats.visible .bar-wrapper:nth-child(7) .bar { transition-delay: 0.7s; }
+#blog-stats.visible .bar-wrapper:nth-child(8) .bar { transition-delay: 0.8s; }
+#blog-stats.visible .bar-wrapper:nth-child(9) .bar { transition-delay: 0.9s; }
+#blog-stats.visible .bar-wrapper:nth-child(10) .bar { transition-delay: 1.0s; }
+#blog-stats.visible .bar-wrapper:nth-child(11) .bar { transition-delay: 1.1s; }
+#blog-stats.visible .bar-wrapper:nth-child(12) .bar { transition-delay: 1.2s; }

@@ -1,4 +1,4 @@
-class AdminUser extends User {
+export class AdminUser extends User {
     #permissions = new Set();
     static MAX_PERMISSIONS = 5;
 

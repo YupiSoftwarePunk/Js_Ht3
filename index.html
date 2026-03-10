@@ -6,8 +6,8 @@
         <title>Стартовая страница</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;700&display=swap" rel="stylesheet">
-        <script src="js/core/User.js" defer></script>
-        <script src="js/core/AdminUser.js" defer></script>
+        <script src="js/core/User.js" type="module"></script>
+        <script src="js/core/AdminUser.js" type="module"></script>
         <script src="js/main.js" defer></script>
         <script src="js/navigation.js" defer></script>
         <script src="js/text-formatter.js" defer></script>
@@ -32,9 +32,7 @@
 
         <main>
             <p>Добро пожаловать на наш сайт!</p>
-            <p>Здесь вы найдете много интересной информации.</p><br>
-
-            <button>Демо наследования</button>
+            <p>Здесь вы найдете много интересной информации.</p>
 
             <form method="post">
                 <input type="text" placeholder="Пост 1">
@@ -64,10 +62,27 @@
 
             <button id="export-csv">Экспорт в CSV</button>
 
-            <section id="blog-stats" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
+            <section id="blog-stats">
                 <h3>Статистика блога</h3>
-                <div id="stats-content">Загрузка...</div>
-                <canvas id="publish-chart" width="400" height="100"></canvas> <button id="export-csv">Экспорт в CSV</button>
+                <!-- <div id="stats-content">Загрузка...</div> -->
+                <div id="stats-content">
+                    <div class="chart-container">
+                        <div class="bar-wrapper"><div class="bar" style="--height: 60%;"></div><span>1</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 85%;"></div><span>2</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 40%;"></div><span>3</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 95%;"></div><span>4</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>5</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>6</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>7</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>8</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>9</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>10</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>11</span></div>
+                        <div class="bar-wrapper"><div class="bar" style="--height: 70%;"></div><span>12</span></div>
+                    </div>
+                </div>
+                <canvas id="publish-chart" width="400" height="100"></canvas> 
+                <button id="export-csv">Экспорт в CSV</button>
             </section>
 
             <div id="post-detail-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;"></div>

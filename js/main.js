@@ -1,3 +1,6 @@
+import { User } from './core/User.js';
+import { AdminUser } from './core/AdminUser.js';
+
 console.log("Сайт загружен");
 
 var links = document.querySelectorAll('.nav-link');
@@ -127,16 +130,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 200);
 
-    initDemo();
+    const statsSection = document.querySelector('#blog-stats');
 
-    try {
-        if (typeof postsData !== 'undefined') {
-            postsData.forEach(post => CreatePosts(post));
-        }
-        demoInheritance();
-    } catch (e) {
-        console.error("Ошибка в процессе выполнения демо:", e);
+    const observerOptions = {
+        root: null,
+        threshold: 0.2 
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log("Статистика видна, запускаю анимацию...");
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    if (statsSection) {
+        observer.observe(statsSection);
+    } else {
+        console.error("Элемент #blog-stats не найден в DOM!");
     }
+
+
+    createDemoButton();
 });
 
 
@@ -164,65 +182,39 @@ function demoInheritance() {
     for(let i = 0; i < 6; i++) admin.grantPermission(`rule_${i}`);
 }
 
-function demoButton() {
+function createDemoButton() {
     const oldBtn = document.getElementById('demoBtn');
     if (oldBtn) oldBtn.remove();
 
     const btn = document.createElement('button');
     btn.id = 'demoBtn';
-    btn.innerHTML = 'Запустить Демо ООП';
-
-    Object.assign(btn.style, {
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        zIndex: '10000', 
-        padding: '15px 25px',
-        backgroundColor: '#ff4757',
-        color: 'white',
-        border: 'none',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        fontWeight: 'bold',
-        boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
-        display: 'block'
-    });
-
-    btn.onclick = demoInheritance;
-
-    document.body.appendChild(btn);
-    console.log("Кнопка создана программно и добавлена в body");
-}
-
-    demoButton();
-    demoInheritance();
-
-
-    function initDemo() {
-    console.log("Попытка создания кнопки...");
-    const btnId = 'demoBtn';
-    if (document.getElementById(btnId)) return;
-
-    const btn = document.createElement('button');
-    btn.id = btnId;
     btn.textContent = 'ЗАПУСТИТЬ ДЕМО ООП';
 
-    btn.setAttribute('style', `
+    btn.style.cssText = `
         position: fixed !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        z-index: 99999 !important;
-        padding: 20px !important;
-        background: red !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        z-index: 999999 !important;
+        padding: 15px 30px !important;
+        background-color: #ff4757 !important;
         color: white !important;
-        display: block !important;
+        border: 3px solid white !important;
+        border-radius: 50px !important;
+        font-family: Montserrat, sans-serif !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.5) !important;
         cursor: pointer !important;
-    `);
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    `;
 
     btn.onclick = () => {
-        console.log("Кнопка нажата!");
+        console.log("--- Кнопка Демо нажата ---");
         demoInheritance();
     };
 
     document.body.appendChild(btn);
+    console.log("Кнопка демо успешно создана и добавлена в body!");
 }
