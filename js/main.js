@@ -107,7 +107,7 @@ const postsData = [
 { date: "2024-02-01", views: "300", tags: "js, react", content: "Текст про реакт", title: "Пост 4" },
 { date: "2023-05-10", views: "1000", tags: "news", content: "Важное объявление", title: "Пост 5" },
 { date: "2026-2-26", views: "50", tags: "life, blog", content: "Мои мысли сегодня", title: "Пост 6" },
-{ date: "2026-3-4", views: "50", tags: "life, blog", content: "Классный текст, ваще все круто", title: "Пост 7" }];
+{ date: "2026-3-10", views: "50", tags: "life, blog", content: "Классный текст, ваще все круто", title: "Пост 7" }];
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -122,4 +122,40 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Ошибка: initPostDetails не найдена. Проверьте подключение text_formatter.js");
         }
     }, 200);
+
+    const demoBtn = document.getElementById('demoBtn');
+    if (demoBtn) {
+        Object.assign(demoBtn.style, {
+            background: "#ff4757",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            display: "block",
+            margin: "20px 0"
+        });
+
+        demoBtn.onclick = demoInheritance;
+    }
 });
+
+
+function demoInheritance() {
+    console.log("Кнопка нажата, запускаю демо...");
+    let user = new User(1, 'Michael');
+    let admin = new AdminUser(2, 'Jack');
+
+    console.log(user.getInfo());
+    console.log(admin.getInfo());
+
+    admin.grantPermission('manage_users');
+    console.log(admin.getPermissions());
+
+    console.log("Список прав:", admin.getPermissions());
+
+    if (admin.canManageUsers()) {
+        admin.banUser(user.id, "Нарушение правил сообщества");
+    }
+    for(let i = 0; i < 6; i++) admin.grantPermission(`rule_${i}`);
+}
