@@ -1,4 +1,4 @@
-export class AdminUser extends User {
+export default class AdminUser extends User {
     #permissions = new Set();
     static MAX_PERMISSIONS = 5;
 
@@ -11,12 +11,12 @@ export class AdminUser extends User {
     grantPermission(permission)
     {
         if (permission === 'admin') {
-            console.warn("Попытка выдать права 'admin' обычным способом отклонена.");
+            console.log("Попытка выдать права 'admin' обычным способом отклонена.");
             return false;
         }
         
         if (this.#permissions.size >= AdminUser.MAX_PERMISSIONS) {
-            console.error("Достигнут лимит прав!");
+            console.log("Достигнут лимит прав!");
             return false;
         }
 
@@ -37,15 +37,18 @@ export class AdminUser extends User {
     hasRole(role)
     {
         if (role === 'admin') {
+            console.log('Вы уже админ');
             return true;
         }
         else {
+            console.log(`у вас есть роль: ${role}`);
             return this.#permissions.has(role);
         }
     }
 
     getPermissions()
     {
+        console.log(`У вас есть разрешения: ${Array.from(this.#permissions)}`);
         return Array.from(this.#permissions);
     }
 
