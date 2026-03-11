@@ -1,4 +1,3 @@
-import User from './core/User.js';
 import AdminUser from './core/AdminUser.js';
 
 const masterAdmin = new AdminUser(99, "Денис");

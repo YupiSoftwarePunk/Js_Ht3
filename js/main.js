@@ -69,69 +69,18 @@ function CreatePosts(data)
     contentPreviewDiv.style.marginTop = '10px';
 
     if (typeof TextFormatter !== 'undefined') {
-        const formattedHtml = TextFormatter.applyFullFormatting(data.content);
-
-        const sanitize = TextFormatter.createSanitizer();
-        const safeFragment = sanitize(formattedHtml);
-        
-        contentPreviewDiv.appendChild(safeFragment);
+        // const shortText = TextFormatter.truncate(100, '...')(data.content);
+        // contentPreviewDiv.innerHTML = TextFormatter.applyFullFormatting(shortText);
+        const formattedContent = TextFormatter.applyFullFormatting(data.content);
+        contentPreviewDiv.innerHTML = formattedContent;
     }
 
     newItem.append(span, div, contentPreviewDiv);
     posts.appendChild(newItem);
 }
 
-
-const postsData = [
-{ date: "2023-10-01", views: "150", tags: "js, frontend", content: "```javascript\n" + `for (var i = 0; i < links.length; i++) \nconsole.log(link[i])` + "\n```", title: "Пост 1" },
-{ date: "2024-1-15", views: "500", tags: "html, css", content: "{}gsdfhjsa<>", title: "Пост 2" },
-{ date: "2023-12-20", views: "50", tags: "life, blog", content: "Мои мысли сегодня", title: "Пост 3" },
-{ date: "2024-2-01", views: "300", tags: "js, react", content: "Текст про реакт", title: "Пост 4" },
-{ date: "2023-5-10", views: "1000", tags: "news", content: "Важное объявление", title: "Пост 5" },
-{ date: "2026-2-26", views: "50", tags: "life, blog", content: "Мои мысли сегодня", title: "Пост 6" },
-{ date: "2026-3-10", views: "50", tags: "life, blog", content: "Классный текст, ваще все круто", title: "Пост 7" }];
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof postsData !== 'undefined') {
-        postsData.forEach(post => CreatePosts(post));
-    }
-
-    setTimeout(() => {
-        if (typeof initPostDetails === 'function') {
-            initPostDetails(postsData);
-        } else {
-            console.error("Ошибка: initPostDetails не найдена. Проверьте подключение text_formatter.js");
-        }
-    }, 200);
-
-    const statsSection = document.querySelector('#blog-stats');
-
-    const observerOptions = {
-        root: null,
-        threshold: 0.2 
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log("Статистика видна, запускаю анимацию...");
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    if (statsSection) {
-        observer.observe(statsSection);
-    } else {
-        console.error("Элемент #blog-stats не найден в DOM!");
-    }
-
-
-    createDemoButton();
-
-
+window.onload = function () 
+{
     var header = document.querySelector('header');
     header.style.backgroundColor = 'lightblue';
 
@@ -155,6 +104,42 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Критическая ошибка: HighlightTodayPosts не определен!");
         }
     }, 100);
+};
+
+
+const postsData = [
+{ date: "2023-10-01", views: "150", tags: "js, frontend", content: "```javascript\n" + `for (var i = 0; i < links.length; i++) \nconsole.log(link[i])` + "\n```", title: "Пост 1" },
+{ date: "2024-01-15", views: "500", tags: "html, css", content: "{}gsdfhjsa<>", title: "Пост 2" },
+{ date: "2023-12-20", views: "50", tags: "life, blog", content: "Мои мысли сегодня", title: "Пост 3" },
+{ date: "2024-02-01", views: "300", tags: "js, react", content: "Текст про реакт", title: "Пост 4" },
+{ date: "2023-05-10", views: "1000", tags: "news", content: "Важное объявление", title: "Пост 5" },
+{ date: "2026-2-26", views: "50", tags: "life, blog", content: "Мои мысли сегодня", title: "Пост 6" },
+{ date: "2026-3-10", views: "50", tags: "life, blog", content: "Классный текст, ваще все круто", title: "Пост 7" }];
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof postsData !== 'undefined') {
+        postsData.forEach(post => CreatePosts(post));
+    }
+
+    setTimeout(() => {
+        if (typeof initPostDetails === 'function') {
+            initPostDetails(postsData);
+        } else {
+            console.error("Ошибка: initPostDetails не найдена. Проверьте подключение text_formatter.js");
+        }
+    }, 200);
+
+    initDemo();
+
+    try {
+        if (typeof postsData !== 'undefined') {
+            postsData.forEach(post => CreatePosts(post));
+        }
+        demoInheritance();
+    } catch (e) {
+        console.error("Ошибка в процессе выполнения демо:", e);
+    }
 });
 
 
@@ -182,39 +167,65 @@ function demoInheritance() {
     for(let i = 0; i < 6; i++) admin.grantPermission(`rule_${i}`);
 }
 
-function createDemoButton() {
+function demoButton() {
     const oldBtn = document.getElementById('demoBtn');
     if (oldBtn) oldBtn.remove();
 
     const btn = document.createElement('button');
     btn.id = 'demoBtn';
+    btn.innerHTML = 'Запустить Демо ООП';
+
+    Object.assign(btn.style, {
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: '10000', 
+        padding: '15px 25px',
+        backgroundColor: '#ff4757',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
+        display: 'block'
+    });
+
+    btn.onclick = demoInheritance;
+
+    document.body.appendChild(btn);
+    console.log("Кнопка создана программно и добавлена в body");
+}
+
+    demoButton();
+    demoInheritance();
+
+
+    function initDemo() {
+    console.log("Попытка создания кнопки...");
+    const btnId = 'demoBtn';
+    if (document.getElementById(btnId)) return;
+
+    const btn = document.createElement('button');
+    btn.id = btnId;
     btn.textContent = 'ЗАПУСТИТЬ ДЕМО ООП';
 
-    btn.style.cssText = `
+    btn.setAttribute('style', `
         position: fixed !important;
-        bottom: 30px !important;
-        right: 30px !important;
-        z-index: 999999 !important;
-        padding: 15px 30px !important;
-        background-color: #ff4757 !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 99999 !important;
+        padding: 20px !important;
+        background: red !important;
         color: white !important;
-        border: 3px solid white !important;
-        border-radius: 50px !important;
-        font-family: Montserrat, sans-serif !important;
-        font-size: 16px !important;
-        font-weight: bold !important;
-        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.5) !important;
-        cursor: pointer !important;
         display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    `;
+        cursor: pointer !important;
+    `);
 
     btn.onclick = () => {
-        console.log("--- Кнопка Демо нажата ---");
+        console.log("Кнопка нажата!");
         demoInheritance();
     };
 
     document.body.appendChild(btn);
-    console.log("Кнопка демо успешно создана и добавлена в body!");
 }
