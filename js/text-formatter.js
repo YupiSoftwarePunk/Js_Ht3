@@ -1,4 +1,4 @@
-const TextFormatter = {
+export const TextFormatter = {
     escapeHtml: (text) => {
         if (typeof text !== 'string') return '';
         const replacements = {
@@ -181,7 +181,7 @@ const TextFormatter = {
 };
 
 
-function initFormatting(posts) {
+export function initFormatting(posts) {
     const btn = document.getElementById('format-posts-btn');
     const modal = document.getElementById('format-modal');
     const overlay = document.getElementById('modal-overlay');
@@ -240,7 +240,7 @@ function initFormatting(posts) {
 }
 
 
-function debounce(func, delay = 300) {
+export function debounce(func, delay = 300) {
     let timeoutId;
     return (...args) => {
         if (timeoutId) clearTimeout(timeoutId);
@@ -251,7 +251,7 @@ function debounce(func, delay = 300) {
 }
 
 
-function initPostDetails(postsData) {
+export function initPostDetails(postsData) {
     const modal = document.getElementById('post-detail-modal');
     const overlay = document.getElementById('post-detail-overlay');
     const contentEdit = document.getElementById('detail-content-edit');
@@ -314,4 +314,44 @@ function initPostDetails(postsData) {
     
     document.getElementById('detail-close-btn').addEventListener('click', close);
     overlay.addEventListener('click', close);
+}
+
+
+export function renderTagCloud(posts) {
+    const container = document.getElementById('tags-container');
+    if (!container) return;
+
+    const allTags = new Set();
+    posts.forEach(post => {
+        post.tags.split(',').forEach(tag => allTags.add(tag.trim()));
+    });
+
+    container.innerHTML = '';
+
+    const resetBtn = document.createElement('button');
+    resetBtn.classList.add('tag');
+    resetBtn.textContent = 'Сбросить всё';
+    resetBtn.onclick = () => {
+        const input = document.querySelector('input');
+        if (input) {
+            input.value = '';
+            input.dispatchEvent(new Event('input')); 
+        }
+    };
+    container.append(resetBtn);
+
+    allTags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.classList.add('tag');
+        btn.textContent = `#${tag}`;
+        
+        btn.onclick = () => {
+            const input = document.querySelector('input');
+            if (input) {
+                input.value = tag;
+                input.dispatchEvent(new Event('input'));
+            }
+        };
+        container.append(btn);
+    });
 }

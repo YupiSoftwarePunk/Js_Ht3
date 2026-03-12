@@ -1,3 +1,7 @@
+import { analyzeText, getFriendlyDate } from './navigation.js';
+
+window.analyzeText = analyzeText;
+
 console.group("Тесты: TextFormatter.escapeHtml");
 
 const test1 = TextFormatter.escapeHtml('<div>"Hello" & \'World\'</div>');

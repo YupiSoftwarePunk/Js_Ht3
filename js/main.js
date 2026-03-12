@@ -1,6 +1,18 @@
 import User from './core/User.js';
 import AdminUser from './core/AdminUser.js';
 
+import { TextFormatter, initPostDetails, renderTagCloud } from './text-formatter.js';
+import { highlightActiveLink, FilterPosts } from './navigation.js';
+import { masterAdmin } from './adminModule.js';
+
+window.TextFormatter = TextFormatter;
+window.highlightActiveLink = highlightActiveLink;
+window.FilterPosts = FilterPosts;
+window.CreatePosts = CreatePosts; 
+window.User = User;
+window.AdminUser = AdminUser;
+window.masterAdmin = masterAdmin;
+
 console.log("Сайт загружен");
 
 var links = document.querySelectorAll('.nav-link');
@@ -60,7 +72,14 @@ function CreatePosts(data)
     
     let spanDetails = document.createElement('span');
     spanDetails.classList.add('stats-details');
-    spanDetails.textContent = `Теги: ${data.tags}`;
+    // spanDetails.textContent = `Теги: ${data.tags}`;
+    spanDetails.textContent = `Теги: `;
+    data.tags.split(',').forEach(tag => {
+    let tagBtn = document.createElement('button'); 
+    tagBtn.classList.add('tag');                  
+    tagBtn.textContent = tag.trim();              
+    spanDetails.append(tagBtn);
+});
 
     div.append(spanDate, " | ", spanReadTime, " | ", spanDetails);
 
@@ -119,6 +138,7 @@ const postsData = [
 
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof postsData !== 'undefined') {
+        renderTagCloud(postsData);
         postsData.forEach(post => CreatePosts(post));
     }
 

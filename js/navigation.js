@@ -1,4 +1,4 @@
-function highlightActiveLink()
+export function highlightActiveLink()
 {
     var link = document.querySelectorAll('.nav-link');
     let currentUrl = window.location.pathname.split('/').pop() || 'index.html';
@@ -17,7 +17,7 @@ function highlightActiveLink()
 }
 
 
-function FilterPosts() {
+export function FilterPosts() {
     const elements = {
         input: document.querySelector('input'),
         list: document.getElementById('post-list'),
@@ -73,7 +73,19 @@ function FilterPosts() {
                 if (post.dateNode) post.dateNode.textContent = getFriendlyDate(post.element.dataset.date);
                 if (post.timeNode) post.timeNode.textContent = `⏱ ${post.stats.readTime} мин.`;
                 if (post.detailsNode) {
-                    post.detailsNode.textContent = `(Слов: ${post.stats.words}, LIX: ${post.stats.readability})`;
+                    // post.detailsNode.textContent = `(Слов: ${post.stats.words}, LIX: ${post.stats.readability})`;
+
+                    post.detailsNode.innerHTML = ''; 
+    
+                    post.detailsNode.append(`(Слов: ${post.stats.words}, LIX: ${post.stats.readability}) `);
+
+                    const tagList = post.element.dataset.tags.split(',');
+                    tagList.forEach(tag => {
+                        const tagBtn = document.createElement('button');
+                        tagBtn.classList.add('tag'); 
+                        tagBtn.textContent = tag.trim();
+                        post.detailsNode.append(tagBtn);
+                    });
                 }
 
                 if (searchText !== "" && post.titleNode) {
@@ -127,7 +139,7 @@ function FilterPosts() {
 }
 
 
-function getFriendlyDate(dateStr) {
+export function getFriendlyDate(dateStr) {
     const date = new Date(dateStr);
     const now = new Date();
     
@@ -152,7 +164,7 @@ function getFriendlyDate(dateStr) {
 }
 
 
-function analyzeText(text) {
+export function analyzeText(text) {
     const words = text.trim().split(/\s+/).filter(w => w.length > 0);
     const charCountWithSpace = text.length;
     const charCountNoSpace = text.replace(/\s+/g, '').length;
@@ -175,7 +187,7 @@ function analyzeText(text) {
 }
 
 
-function drawChart(visiblePosts) {
+export function drawChart(visiblePosts) {
     const canvas = document.getElementById('publish-chart');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -210,7 +222,7 @@ function drawChart(visiblePosts) {
 }
 
 
-function updateBlogStats(visiblePosts, container) {
+export function updateBlogStats(visiblePosts, container) {
     if (!container) return;
 
     const totalReadTime = visiblePosts.reduce((sum, post) => {

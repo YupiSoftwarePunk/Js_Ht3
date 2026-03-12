@@ -1,6 +1,6 @@
 import AdminUser from './core/AdminUser.js';
 
-const masterAdmin = new AdminUser(99, "Денис");
+export const masterAdmin = new AdminUser(99, "Денис");
 masterAdmin.grantPermission('manage_users');
 
 let users = [
