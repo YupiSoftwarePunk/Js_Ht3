@@ -1,7 +1,7 @@
 import User from './core/User.js';
 import AdminUser from './core/AdminUser.js';
 
-import { TextFormatter, initPostDetails, renderTagCloud } from './text-formatter.js';
+import { TextFormatter, initPostDetails } from './text-formatter.js';
 import { highlightActiveLink, FilterPosts } from './navigation.js';
 import { masterAdmin } from './adminModule.js';
 
@@ -138,7 +138,7 @@ const postsData = [
 
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof postsData !== 'undefined') {
-        renderTagCloud(postsData);
+        // renderTagCloud(postsData);
         postsData.forEach(post => CreatePosts(post));
     }
 

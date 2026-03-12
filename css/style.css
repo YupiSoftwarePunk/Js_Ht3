@@ -102,30 +102,16 @@ input[type="text"], select {
     padding-left: 10px;
 }
 
-#tag-cloud {
-    margin: 10px 0; 
-    padding: 15px; 
-    border: 2px dashed #dfe4ea;
-    border-radius: 12px;
-    background-color: #f9f9f9;
-}
-
-#tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-#tags-container .tag {
+.tag,
+#tags-container button {
     appearance: none;
     -webkit-appearance: none;
     outline: none;
     background: white; 
-    border: 1.5px solid #ff4757;
-
+    border: 1.5px solid #007acc;
     display: inline-block;
     padding: 6px 14px;
-    color: #ff4757; 
+    color: #007acc; 
     border-radius: 20px; 
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85em;
@@ -133,46 +119,22 @@ input[type="text"], select {
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
-    margin: 2px;
+    margin: 4px 2px; 
 }
 
-#tags-container .tag:hover {
-    background-color: #ff4757;
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+.tag:hover,
+#tags-container button:hover {
+    background-color: #3395ff;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
     transform: translateY(-2px);
 }
 
-#tags-container .tag.active {
-    background-color: #2f3542; 
-    border-color: #2f3542;
+.tag.active,
+#tags-container button:active {
+    background-color: #005a9e; 
+    border-color: #005a9e;
     color: white;
-}
-
-.tag {
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    background: white; 
-    border: 1.5px solid #ff4757;
-    display: inline-block;
-    padding: 6px 14px;
-    color: #ff4757; 
-    border-radius: 20px; 
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    user-select: none;
-    margin: 2px;
-}
-
-.tag:hover {
-    background-color: #ff4757;
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
-    transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
@@ -462,15 +424,6 @@ mark { background: yellow; padding: 0 2px; }
 
 #admin-modal tr:hover {
     background-color: #f9f9f9;
-}
-
-.tag {
-    background: #dfe4ea;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    text-transform: uppercase;
-    font-weight: bold;
 }
 
 .btn-grant, .btn-ban, #admin-close-btn {
