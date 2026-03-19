@@ -4,6 +4,9 @@ import AdminUser from './core/AdminUser.js';
 import { TextFormatter, initPostDetails } from './text-formatter.js';
 import { highlightActiveLink, FilterPosts } from './navigation.js';
 import { masterAdmin } from './adminModule.js';
+import { SaveData } from './SaveData.js';
+
+const blogStorage = new SaveData('Blog_');
 
 window.TextFormatter = TextFormatter;
 window.highlightActiveLink = highlightActiveLink;
@@ -171,7 +174,12 @@ function demoInheritance() {
 
     console.log("Кнопка нажата, запускаю демо...");
     let user = new User(1, 'Michael');
-    let admin = new AdminUser(2, 'Jack');
+    const admin = window.masterAdmin;
+
+    if (!admin) {
+        console.error("Админ не инициализирован!");
+        return;
+    }
 
     console.log(user.getInfo());
     console.log(admin.getInfo());
@@ -185,6 +193,8 @@ function demoInheritance() {
         admin.banUser(user.id, "Нарушение правил сообщества");
     }
     for(let i = 0; i < 6; i++) admin.grantPermission(`rule_${i}`);
+
+    console.table(admin.getLogs());
 }
 
 function demoButton() {
@@ -249,3 +259,10 @@ function demoButton() {
 
     document.body.appendChild(btn);
 }
+
+const admin = new AdminUser(1, 'Denis', blogStorage);
+
+admin.grantPermission('manage_users');
+admin.grantPermission('publish_posts');
+
+console.log('Текущие права:', admin.getPermissions());
