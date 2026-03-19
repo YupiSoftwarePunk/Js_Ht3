@@ -126,4 +126,8 @@ export default class AdminUser extends User {
         this.#logs = [];
         this.saveState();
     }
+
+    externalLog(message) {
+        this.#addLog(message);
+    }
 }

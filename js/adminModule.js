@@ -1,6 +1,9 @@
 import AdminUser from './core/AdminUser.js';
+import { SaveData } from './SaveData.js';
 
-export const masterAdmin = new AdminUser(99, "Денис");
+const blogStorage = new SaveData('Blog_');
+
+export const masterAdmin = new AdminUser(99, "Денис", blogStorage);
 masterAdmin.grantPermission('manage_users');
 
 let users = [
@@ -78,5 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const entry = document.createElement('div');
         entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
         log.prepend(entry);
+
+        if (masterAdmin && typeof masterAdmin.externalLog === 'function') {
+            masterAdmin.externalLog(message);
+        }
     }
 });
